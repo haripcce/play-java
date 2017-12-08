@@ -1,0 +1,42 @@
+@(tenants: List[Tenant])
+@main("Tenant List") {
+
+<h2>All Tenants</h2>
+
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(tenant <- tenants) {
+
+    <tr>
+        <td>
+            @tenant.getId()
+        </td>
+        <td>@tenant.getName()</td>
+        <td>@tenant.getDescription()</td>
+
+        <td>
+            <i class="icon icon-pencil"></i>
+            <i class="icon icon-trash"></i>
+        </td>
+    </tr>
+    }
+
+    </tbody>
+</table>
+
+
+
+<a href="@routes.TenantController.addTenant()" class="btn">
+    <i class="icon-plus"></i> New Tenant</a>
+}
