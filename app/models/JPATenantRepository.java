@@ -25,8 +25,9 @@ public class JPATenantRepository implements TenantRepository {
     }
 
     @Override
-    public CompletionStage<Tenant> add(Tenant tenant) {
-        return supplyAsync(() -> wrap(em -> insert(em, tenant)), executionContext);
+    public CompletionStage<Stream<Tenant>> add(Tenant tenant) {
+        return supplyAsync(() -> wrap(em -> insert(em, tenant)), executionContext).thenCompose(s -> list());
+
     }
 
     @Override

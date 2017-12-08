@@ -17,6 +17,7 @@ import views.html.manualform.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,6 @@ public class TenantController extends Controller {
     public CompletionStage<Result> list(Integer page) {
         return tenantRepository.list().thenApplyAsync(personStream -> {
             return ok(list.render(personStream.collect(Collectors.toList())));
-            //  return ok(toJson(personStream.collect(Collectors.toList())));
         }, ec.current());
 
     }
@@ -47,13 +47,15 @@ public class TenantController extends Controller {
 
     public CompletionStage<Result> createTenant() {
         Form<Tenant> productForm = formFactory.form(Tenant.class);
-        //productForm.bindFromRequest();
+
         Tenant tenant = productForm.bindFromRequest().get();
         tenant.setGuid(UUID.randomUUID().toString());
-        //tenant.setId(tenants.size() + 1l);
-        //tenants.add(tenant);
-        return tenantRepository.add(tenant).thenApplyAsync(p -> {
-            return redirect(routes.TenantController.list(1));
+
+
+        tenantRepository.add(tenant);
+
+        return tenantRepository.list().thenApplyAsync(personStream -> {
+            return ok(list.render(personStream.collect(Collectors.toList())));
         }, ec.current());
 
     }
