@@ -11,5 +11,12 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final" // replace by your jpa implementation
 )
 libraryDependencies += guice
-libraryDependencies += "com.h2database" % "h2" % "1.4.194"
+//libraryDependencies += "com.h2database" % "h2" % "1.4.194"
 libraryDependencies ++= Seq(evolutions, jdbc)
+// https://mvnrepository.com/artifact/org.postgresql/postgresql
+libraryDependencies += "org.postgresql" % "postgresql" % "9.4.1208"
+
+
+
+
+

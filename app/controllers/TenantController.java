@@ -51,10 +51,7 @@ public class TenantController extends Controller {
         Tenant tenant = productForm.bindFromRequest().get();
         tenant.setGuid(UUID.randomUUID().toString());
 
-
-        tenantRepository.add(tenant);
-
-        return tenantRepository.list().thenApplyAsync(personStream -> {
+        return tenantRepository.add(tenant).thenApplyAsync(personStream -> {
             return ok(list.render(personStream.collect(Collectors.toList())));
         }, ec.current());
 
